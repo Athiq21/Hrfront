@@ -53,47 +53,35 @@ const Dental: React.FC<DentalProps> = ({ isOpen, onToggle, formData, setFormData
   };
 
 
-  const handleRemoveFile = (index: number) => {
-    const newFiles = [...files];
-    newFiles[index] = null;
-    setFiles(newFiles);
 
+
+  const handleRemoveFile = (index: number, fileIndex?: number) => {
+    const newFiles = [...files];
+    const newPreviews = [...filePreviews];
+
+    if (index === 2 && fileIndex !== undefined) {
+      // Remove specific file from Additional Documents
+      const updatedFiles = (newFiles[index] as File[]).filter((_, i) => i !== fileIndex);
+      newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; // If no files left, set to null
+      newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null; // Update previews
+    } else {
+      newFiles[index] = null;
+      newPreviews[index] = null;
+    }
+
+    setFiles(newFiles);
+    setFilePreviews(newPreviews);
+
+    // Update the formData state in the parent component to remove the file
     setFormData((prevFormData: any) => ({
       ...prevFormData,
-      funeralExp: {
-        ...prevFormData.funeralExp,
-        [index === 0 ? 'DeathCert' : index === 1 ? 'NicCopy' : 'Proof']: null,
+      dental: {
+        ...prevFormData.dental,
+        prescription: index === 0 ? null : prevFormData.dental.prescription,
+        originalPaymentReceipt: index === 1 ? null : prevFormData.dental.originalPaymentReceipt,
       },
     }));
   };
-
-  // const handleRemoveFile = (index: number, fileIndex?: number) => {
-  //   const newFiles = [...files];
-  //   const newPreviews = [...filePreviews];
-
-  //   if (index === 2 && fileIndex !== undefined) {
-  //     // Remove specific file from Additional Documents
-  //     const updatedFiles = (newFiles[index] as File[]).filter((_, i) => i !== fileIndex);
-  //     newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; // If no files left, set to null
-  //     newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null; // Update previews
-  //   } else {
-  //     newFiles[index] = null;
-  //     newPreviews[index] = null;
-  //   }
-
-  //   setFiles(newFiles);
-  //   setFilePreviews(newPreviews);
-
-  //   // Update the formData state in the parent component to remove the file
-  //   setFormData((prevFormData: any) => ({
-  //     ...prevFormData,
-  //     dental: {
-  //       ...prevFormData.dental,
-  //       prescription: index === 0 ? null : prevFormData.dental.prescription,
-  //       originalPaymentReceipt: index === 1 ? null : prevFormData.dental.originalPaymentReceipt,
-  //     },
-  //   }));
-  // };
 
   
 

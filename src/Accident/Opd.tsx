@@ -256,51 +256,51 @@ const Opd: React.FC<OpdProps> = ({ isOpen, onToggle, formData, setFormData }) =>
     }));
   };
 
-  // const handleRemoveFile = (index: number, fileIndex?: number) => {
-  //   const newFiles = [...files];
-  //   const newPreviews = [...filePreviews];
-
-  //   if (index === 2 && fileIndex !== undefined) {
-  //     const updatedFiles = (newFiles[index] as File[]).filter((_, i) => i !== fileIndex);
-  //     newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; 
-  //     newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null;
-  //   } else {
-  //     newFiles[index] = null; 
-  //     newPreviews[index] = null;
-  //   }
-
-  //   setFiles(newFiles);
-  //   setFilePreviews(newPreviews);
-
-
-  //   setFormData((prevFormData: any) => ({
-  //     ...prevFormData,
-  //     opd: {
-  //       ...prevFormData.opd,
-  //       prescription: index === 0 ? null : prevFormData.opd.prescription,
-  //       originalPaymentRec: index === 1 ? null : prevFormData.opd.originalPaymentRec
-  //     }
-  //   }));
-  // };
-
-  const handleRemoveFile = (index: number) => {
+  const handleRemoveFile = (index: number, fileIndex?: number) => {
     const newFiles = [...files];
     const newPreviews = [...filePreviews];
 
-    newFiles[index] = null;
-    newPreviews[index] = null;
+    if (index === 2 && fileIndex !== undefined) {
+      const updatedFiles = (newFiles[index] as File[]).filter((_, i) => i !== fileIndex);
+      newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; 
+      newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null;
+    } else {
+      newFiles[index] = null; 
+      newPreviews[index] = null;
+    }
 
     setFiles(newFiles);
     setFilePreviews(newPreviews);
+
+
     setFormData((prevFormData: any) => ({
       ...prevFormData,
-      criticalIllness: {
-        ...prevFormData.criticalIllness,
-        diagnosisCard: index === 0 ? null : prevFormData.criticalIllness.diagnosisCard,
-        medicalAttendantCard: index === 1 ? null : prevFormData.criticalIllness.medicalAttendantCard,
+      opd: {
+        ...prevFormData.opd,
+        prescription: index === 0 ? null : prevFormData.opd.prescription,
+        originalPaymentRec: index === 1 ? null : prevFormData.opd.originalPaymentRec
       }
     }));
   };
+
+  // const handleRemoveFile = (index: number) => {
+  //   const newFiles = [...files];
+  //   const newPreviews = [...filePreviews];
+
+  //   newFiles[index] = null;
+  //   newPreviews[index] = null;
+
+  //   setFiles(newFiles);
+  //   setFilePreviews(newPreviews);
+  //   setFormData((prevFormData: any) => ({
+  //     ...prevFormData,
+  //     criticalIllness: {
+  //       ...prevFormData.criticalIllness,
+  //       diagnosisCard: index === 0 ? null : prevFormData.criticalIllness.diagnosisCard,
+  //       medicalAttendantCard: index === 1 ? null : prevFormData.criticalIllness.medicalAttendantCard,
+  //     }
+  //   }));
+  // };
 
 
   const openModal = (image: string) => {
