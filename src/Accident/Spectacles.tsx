@@ -7,13 +7,14 @@ import FilePreviewModal from '../Component/FilePreviewModal';
 interface SpectaclesProps {
   isOpen: boolean;
   onToggle: () => void;
+
   formData: any;
   setFormData: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, setFormData }) => {
-  const [files, setFiles] = useState<(File | File[] | null)[]>(Array(3).fill(null));
-  const [filePreviews, setFilePreviews] = useState<(string | string[] | null)[]>(Array(3).fill(null));
+const Spectacles: React.FC<SpectaclesProps> = ({ formData, setFormData }) => {
+  const [files, setFiles] = useState<(File | File[] | null)[]>([null, null, null]);
+  const [filePreviews, setFilePreviews] = useState<(string | string[] | null)[]>([null, null, null]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -49,30 +50,55 @@ const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, set
     }));
   };
 
-  const handleRemoveFile = (index: number, fileIndex?: number) => {
+
+  const handleRemoveFile = (index: number) => {
     const newFiles = [...files];
     const newPreviews = [...filePreviews];
 
-    if (index === 2 && fileIndex !== undefined) {
-      const updatedFiles = (newFiles[index] as File[]).filter((_, i) => i !== fileIndex);
-      newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; 
-      newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null; 
-      newFiles[index] = null;
-      newPreviews[index] = null;
-    }
+    newFiles[index] = null;
+    newPreviews[index] = null;
 
     setFiles(newFiles);
     setFilePreviews(newPreviews);
-
     setFormData((prevFormData: any) => ({
       ...prevFormData,
-      spectacles: {
-        ...prevFormData.spectacles,
-        prescription: index === 0 ? null : prevFormData.spectacles.prescription,
-        originalPaymentRecspe: index === 1 ? null : prevFormData.spectacles.originalPaymentRecspe
+      criticalIllness: {
+        ...prevFormData.criticalIllness,
+        diagnosisCard: index === 0 ? null : prevFormData.criticalIllness.diagnosisCard,
+        medicalAttendantCard: index === 1 ? null : prevFormData.criticalIllness.medicalAttendantCard,
       }
     }));
   };
+
+//   const handleRemoveFile = (index: number, fileIndex?: number) => {
+//     const newFiles = [...files];
+//     const newPreviews = [...filePreviews];
+
+//     if (index === 2 && fileIndex !== undefined) {
+//       // If there are multiple files in index 2 (additional documents)
+//       if (Array.isArray(newFiles[index])) {
+//         const updatedFiles = (newFiles[index] as File[]).filter((_, i) => i !== fileIndex);
+//         newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; 
+//         newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null; 
+//       }
+//     } else {
+//       newFiles[index] = null; // Clear the selected file
+//       newPreviews[index] = null; // Clear the preview
+//     }
+
+//     setFiles(newFiles);
+//     setFilePreviews(newPreviews);
+
+//     setFormData((prevFormData: any) => ({
+//       ...prevFormData,
+//       spectacles: {
+//         ...prevFormData.spectacles,
+//         prescription: index === 0 ? null : prevFormData.spectacles.prescription,
+//         originalPaymentRecspe: index === 1 ? null : prevFormData.spectacles.originalPaymentRecspe
+//       }
+//     }));
+// };
+
 
   const openModal = (image: string) => {
     setSelectedImage(image);
@@ -104,13 +130,15 @@ const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, set
           <label>Date of Diagnosis:</label>
           <input 
             type="date" 
-            name="dateOfDiagnosis" 
-            value={formData.spectacles.dateOfDiagnosis}
+            name="dateOfDiagnosisspe" 
+            value={formData.spectacles.dateOfDiagnosisspe}
             onChange={handleChange}
             className="border rounded px-2 py-1" 
           />
 
           <label>Claimed Amount:</label>
+          <div className="flex items-center border rounded px-2 py-1">
+          <span className="mr-1">Rs.</span>
           <input 
             type="text" 
             name="claimedAmountspe"
@@ -118,7 +146,7 @@ const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, set
             onChange={handleChange}
             className="border rounded px-2 py-1" 
           />
-
+</div>
           <label>Prescription:</label>
           <div className="flex items-center mb-2">
             <input

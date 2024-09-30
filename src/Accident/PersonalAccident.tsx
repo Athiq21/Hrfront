@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ClearIcon from '@mui/icons-material/Clear';
 import DocumentUploader from '../Component/DocumentUploader';
+import FilePreviewModal from '../Component/FilePreviewModal';
 
 interface PersonalAccidentProps {
   isOpen: boolean;
@@ -194,16 +195,8 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
           </div>
         </div>
       {/* )} */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-4 rounded-lg relative">
-            <img src={selectedImage!} alt="Enlarged Preview" className="max-w-lg max-h-screen" />
-            <button className="absolute top-2 right-2 text-red-500" onClick={closeModal}>
-              X
-            </button>
-          </div>
-        </div>
-      )}
+      
+      <FilePreviewModal isOpen={isModalOpen} onClose={closeModal} fileUrl={selectedImage} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DocumentUploader from '../Component/DocumentUploader';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ClearIcon from '@mui/icons-material/Clear';
+import FilePreviewModal from '../Component/FilePreviewModal';
 
 interface FuneralExpProps {
   isOpen: boolean;
@@ -15,7 +16,9 @@ const FuneralExp: React.FC<FuneralExpProps> = ({ isOpen, onToggle, formData, set
   const [files, setFiles] = useState<(File | null)[]>(Array(3).fill(null));
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string | null>(null);
-
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null); 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevFormData: any) => ({
@@ -67,9 +70,9 @@ const FuneralExp: React.FC<FuneralExpProps> = ({ isOpen, onToggle, formData, set
     }
   };
 
-  const handleCloseModal = () => {
+  const closeModal = () => {
     setModalOpen(false);
-    setCurrentImage(null);
+    setCurrentFileUrl(null);
   };
 
   return (
@@ -205,19 +208,8 @@ const FuneralExp: React.FC<FuneralExpProps> = ({ isOpen, onToggle, formData, set
         </div>
       {/* )} */}
 
-      {/* Modal for viewing images */}
-      {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-md">
-            <button onClick={handleCloseModal} className="absolute top-2 right-2">
-              <ClearIcon />
-            </button>
-            {currentImage && (
-              <img src={currentImage} alt="Preview" className="max-w-full max-h-full" />
-            )}
-          </div>
-        </div>
-      )}
+     
+      <FilePreviewModal isOpen={isModalOpen} onClose={closeModal} fileUrl={selectedImage} />
     </div>
   );
 };

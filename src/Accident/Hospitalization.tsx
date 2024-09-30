@@ -31,6 +31,8 @@ const Hospitalization: React.FC<HospitalizationProps> = ({ isOpen, onToggle, for
   const [filePreviews, setFilePreviews] = useState<(string | string[] | null)[]>(Array(5).fill(null));
   const [modalOpen, setModalOpen] = useState(false);
   const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null); 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
@@ -145,6 +147,13 @@ const Hospitalization: React.FC<HospitalizationProps> = ({ isOpen, onToggle, for
 <div className="flex items-center border rounded px-2 py-1">
   <span className="mr-1">Rs.</span>
   <input
+              type="text"
+              name="claimedAmount"
+              value={formData.hospitalization.claimedAmount}
+              onChange={handleChange}
+              className="border rounded px-2 py-1"
+            />
+  {/* <input
     type="text"
     name="claimedAmount"
     value={new Intl.NumberFormat('en-US').format(formData.hospitalization.claimedAmount.replace(/\D/g, ''))}
@@ -154,7 +163,7 @@ const Hospitalization: React.FC<HospitalizationProps> = ({ isOpen, onToggle, for
     }}
     className="flex-grow"
     placeholder="0"
-  />
+  /> */}
 </div>
 
             <div className='mb-2'>

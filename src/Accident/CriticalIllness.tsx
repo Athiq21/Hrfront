@@ -3,6 +3,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DocumentUploader from '../Component/DocumentUploader';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ClearIcon from '@mui/icons-material/Clear';
+import FilePreviewModal from '../Component/FilePreviewModal';
 
 interface CriticalIllnessProps {
   isOpen: boolean;
@@ -144,17 +145,9 @@ const CriticalIllness: React.FC<CriticalIllnessProps> = ({ isOpen, onToggle, for
         </div>
       {/* )} */}
 
-      {/* Modal for Image Enlargement */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-4 rounded-lg relative">
-            <img src={selectedImage!} alt="Enlarged Preview" className="max-w-lg max-h-screen" />
-            <button className="absolute top-2 right-2 text-red-500" onClick={closeModal}>
-              X
-            </button>
-          </div>
-        </div>
-      )}
+    
+     
+      <FilePreviewModal isOpen={isModalOpen} onClose={closeModal} fileUrl={selectedImage} />
     </div>
   );
 };
