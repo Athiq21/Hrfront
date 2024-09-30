@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DocumentUploader from '../Component/DocumentUploader';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -22,26 +21,24 @@ const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, set
     const selectedFiles = Array.from(event.target.files || []);
     const newFiles = [...files];
 
-    if (index === 2) { // For Additional Documents, allowing multiple files
-      newFiles[index] = selectedFiles; // Store array of files
+    if (index === 2) { 
+      newFiles[index] = selectedFiles; 
     } else {
-      newFiles[index] = selectedFiles[0] || null; // Store single file or null
+      newFiles[index] = selectedFiles[0] || null; 
     }
 
     setFiles(newFiles);
 
     const newPreviews = [...filePreviews];
     if (index === 2) {
-      newPreviews[index] = selectedFiles.map(file => URL.createObjectURL(file)); // Generate previews for multiple files
+      newPreviews[index] = selectedFiles.map(file => URL.createObjectURL(file)); 
     } else if (selectedFiles[0]) {
-      newPreviews[index] = URL.createObjectURL(selectedFiles[0]); // Generate preview for single file
+      newPreviews[index] = URL.createObjectURL(selectedFiles[0]); 
     } else {
       newPreviews[index] = null;
     }
 
     setFilePreviews(newPreviews);
-
-    // Update the formData state in the parent component for the file inputs
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       spectacles: {
@@ -57,11 +54,9 @@ const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, set
     const newPreviews = [...filePreviews];
 
     if (index === 2 && fileIndex !== undefined) {
-      // Remove specific file from Additional Documents
       const updatedFiles = (newFiles[index] as File[]).filter((_, i) => i !== fileIndex);
-      newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; // If no files left, set to null
-      newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null; // Update previews
-    } else {
+      newFiles[index] = updatedFiles.length > 0 ? updatedFiles : null; 
+      newPreviews[index] = updatedFiles.length > 0 ? newPreviews[index]?.filter((_, i) => i !== fileIndex) : null; 
       newFiles[index] = null;
       newPreviews[index] = null;
     }
@@ -69,7 +64,6 @@ const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, set
     setFiles(newFiles);
     setFilePreviews(newPreviews);
 
-    // Update the formData state in the parent component to remove the file
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       spectacles: {

@@ -48,8 +48,6 @@ const CriticalIllness: React.FC<CriticalIllnessProps> = ({ isOpen, onToggle, for
 
     setFiles(newFiles);
     setFilePreviews(newPreviews);
-
-    // Update the formData state in the parent component to remove the file
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       criticalIllness: {

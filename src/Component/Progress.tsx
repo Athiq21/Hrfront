@@ -73,18 +73,12 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
       <p className="text-lg font-semibold text-gray-800 mt-4">
         Step {currentStep} of {totalSteps}
       </p>
-
-      {/* Progress Bar Container */}
       <div className="w-full h-2 bg-gray-300 rounded mt-2">
-        {/* Actual Progress */}
-        <div className="h-full bg-orange-400 rounded" style={{ width: `${progress}%` }}></div>
+  <div className="h-full bg-orange-400 rounded" style={{ width: `${progress}%` }}></div>
       </div>
-
-      {/* Optional Lamp Icon or Additional Elements */}
-      <div className="flex items-center mb-2 mt-2">
-        {/* You can add the lamp icon here if needed */}
-      </div>
-    </div>
+<div className="flex items-center mb-2 mt-2">
+  </div>
+</div>
   );
 };
 

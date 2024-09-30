@@ -7,13 +7,15 @@ import ProgressBar from '../Component/Progress';
 interface StepAProps {
   setTempData: React.Dispatch<React.SetStateAction<{ insured: string; claimType: string }>>;
 } 
-
 const StepA: React.FC<StepAProps> = ({ setTempData }) => {
-  const location = useLocation(); // Get the current location
-  const [selectedInsured, setSelectedInsured] = useState<string>(''); // State for insured people selection
-  const [selectedClaimType, setSelectedClaimType] = useState<string>(''); // State for claim type selection
+  const location = useLocation(); 
+  const [selectedInsured, setSelectedInsured] = useState<string>('');
+  const [selectedClaimType, setSelectedClaimType] = useState<string>('');
   const [tempdata,settempdata] = useState<string>(''); 
-  const insuredPeopleOptions = ['Self', 'Wife', 'Child1', 'Child2']; // Example insured people options
+
+
+
+  const insuredPeopleOptions = ['Self', 'Wife', 'Child1', 'Child2']; 
   const claimTypeOptions = ['Hospitalization', 'OPD', 'Spectacles', 'Dental', 'Personal Accident Cover', 'Critical Illness','Funeral Expenses']; // Example claim type options
   const navigate = useNavigate();
 
@@ -77,8 +79,10 @@ const StepA: React.FC<StepAProps> = ({ setTempData }) => {
 
         <div className="absolute bottom-4 right-4">
           <Next 
-            tempData={{ insured: selectedInsured, claimType: selectedClaimType }} 
-            setTempData={setTempData} 
+            // tempData={{ insured: selectedInsured, claimType: selectedClaimType }} 
+            // setTempData={setTempData} 
+            tempData=""
+            setTempData={() => {}}
             currentStep={1} 
             totalSteps={4} 
             disabled={isNextDisabled}

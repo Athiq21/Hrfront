@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import ProgressBar from '../Component/Progress';
-import Submit from '../Component/Submit'; // Assuming this is your button component
+import Submit from '../Component/Submit'; 
 import Previous from '../Component/Previous';
 
 const StepD: React.FC = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const [error, setError] = useState(''); // State to manage error message
+  const [error, setError] = useState(''); 
 
   const handleCheckboxChange = () => {
     setIsChecked((prev) => !prev);
-    setError(''); // Clear error message when checkbox is checked
+    setError(''); 
   };
 
   const handleSubmit = () => {
     if (isChecked) {
-      // Handle successful submit logic here
+
       console.log("Form submitted successfully!");
     } else {
       setError("You must agree to the declaration before submitting.");
@@ -26,8 +26,6 @@ const StepD: React.FC = () => {
       <ProgressBar currentStep={4} totalSteps={4} />
       <Previous/>
       <h4 className="text-4xl font-bold mb-10">Almost Done!!</h4>
-
-      {/* Declaration Box */}
       <div className="w-full border-2 border-orange-600 px-4 py-4 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200">
         <h5 className="text-lg font-bold">
           I do hereby declare that the answers given by me are true and complete. I hereby authorize Janashakthi Insurance Co. Ltd. to obtain information
@@ -35,8 +33,6 @@ const StepD: React.FC = () => {
           attendants who treated me, or any other institution.
         </h5>
       </div>
-
-      {/* Checkbox and Label */}
       <div className="flex justify-start items-center mt-6">
         <input 
           type="checkbox" 
@@ -46,15 +42,11 @@ const StepD: React.FC = () => {
         />
         <label className="text-sm font-medium">I agree to the above declaration.</label>
       </div>
-
-      {/* Error Message */}
       {error && (
         <div className="mt-4 text-red-600 text-sm font-semibold">
           {error}
         </div>
       )}
-
-      {/* Submit Button */}
       <div className="mt-8 flex justify-end">
         <Submit 
           label="Submit" 

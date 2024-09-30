@@ -33,7 +33,7 @@ const StepC: React.FC = () => {
       isICU: false,
     },
     opd: { 
-      dateOfDiagnosis: '', // Updated to camelCase
+      dateOfDiagnosis: '', 
       claimedAmountopd: '',
       prescription: null,
       originalPaymentRec: null
@@ -104,7 +104,11 @@ const StepC: React.FC = () => {
   }, [formData]);
 
   const handleToggle = (type: string) => {
-    setIsOpen((prev) => ({ ...prev, [type]: !prev[type] }));
+    setIsOpen((prev) => ({ ...prev, 
+      // [
+        type
+      // ]: !prev[type] 
+    }));
   };
   
 
@@ -115,7 +119,6 @@ const StepC: React.FC = () => {
   console.log('personalAccident', formData.personalAccident)
   console.log('criticalIllness',formData.criticalIllness)
   console.log('funeralexp',formData.funeralExp)
-  // console.log('Claim Type:', claimType);
 
   const isNextDisabled = () => {
     switch (claimType) {
@@ -129,7 +132,7 @@ const StepC: React.FC = () => {
 
       case 'OPD':
         return !formData.opd.claimedAmountopd || 
-               !formData.opd.dateOfDiagnosis || // Updated to camelCase
+               !formData.opd.dateOfDiagnosis || 
                !formData.opd.prescription ||
                !formData.opd.originalPaymentRec;
 
@@ -169,7 +172,7 @@ const StepC: React.FC = () => {
         !formData.funeralExp.Proof;
 
       default:
-        return true; // If claim type is unknown, disable the button
+        return true; 
     }
   };
 
@@ -317,7 +320,7 @@ const StepC: React.FC = () => {
           <Next
             tempData=""
             setTempData={() => {}}
-            currentStep={2}
+            currentStep={3}
             totalSteps={4}
             disabled={isNextDisabled()}
             onClick={handleNext}

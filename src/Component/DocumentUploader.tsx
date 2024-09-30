@@ -7,11 +7,9 @@ interface Uploader {
 }
 
 const DocumentUploader: React.FC = () => {
-  const [uploaders, setUploaders] = useState<Uploader[]>([{ id: 'uploader-0', file: null }]); // Start with one uploader
-  const [viewingFile, setViewingFile] = useState<File | null>(null); // Track the file being viewed
-  const [showModal, setShowModal] = useState(false); // Control the modal visibility
-
-  // Function to add a new uploader with a limit of 4
+  const [uploaders, setUploaders] = useState<Uploader[]>([{ id: 'uploader-0', file: null }]);
+  const [viewingFile, setViewingFile] = useState<File | null>(null); 
+  const [showModal, setShowModal] = useState(false);
   const addUploader = () => {
     if (uploaders.length < 4) {
       setUploaders((prevUploaders) => [
@@ -22,13 +20,10 @@ const DocumentUploader: React.FC = () => {
       alert('You can only add up to 4 documents.');
     }
   };
-
-  // Function to remove an uploader based on index
   const removeUploader = (index: number) => {
     setUploaders((prevUploaders) => prevUploaders.filter((_, i) => i !== index));
   };
 
-  // Function to handle file change for each uploader
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
@@ -40,13 +35,10 @@ const DocumentUploader: React.FC = () => {
     }
   };
 
-  // Function to open the modal for viewing the image
   const viewImage = (file: File) => {
     setViewingFile(file);
-    setShowModal(true); // Open the modal
+    setShowModal(true); 
   };
-
-  // Function to close the modal
   const closeModal = () => {
     setShowModal(false);
     setViewingFile(null);
@@ -59,7 +51,7 @@ const DocumentUploader: React.FC = () => {
           <input
             type="file"
             onChange={(e) => handleFileChange(e, index)}
-            className="border rounded px-2 py-1 mr-2 w-48" // Adjust width with w-48 (12rem)
+            className="border rounded px-2 py-1 mr-2 w-48"
           />
           <button
             onClick={() => removeUploader(index)}
@@ -86,8 +78,6 @@ const DocumentUploader: React.FC = () => {
           + Add Document
         </button>
       )}
-
-      {/* Modal for viewing image */}
       {showModal && viewingFile && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-4 rounded shadow-lg max-w-lg">

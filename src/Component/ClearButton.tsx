@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ClearButtonProps {
-  onClear: () => void; // Function to handle the clear action
+  onClear: () => void;
 }
 
 const ClearButton: React.FC<ClearButtonProps> = ({ onClear }) => {

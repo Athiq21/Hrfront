@@ -17,7 +17,7 @@ interface HospitalizationForm {
   hospitalBill?: File | null;
   paymentReceipt?: File | null;
   medicalReports?: File | null;
-  additionalDocuments?: FileList | null; // Allow multiple files
+  additionalDocuments?: FileList | null;
 }
 
 interface HospitalizationProps {
@@ -30,7 +30,7 @@ interface HospitalizationProps {
 const Hospitalization: React.FC<HospitalizationProps> = ({ isOpen, onToggle, formData, setFormData }) => {
   const [filePreviews, setFilePreviews] = useState<(string | string[] | null)[]>(Array(5).fill(null));
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null); // State to store the current file URL
+  const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
@@ -40,13 +40,11 @@ const Hospitalization: React.FC<HospitalizationProps> = ({ isOpen, onToggle, for
         ...prev,
         hospitalization: { ...prev.hospitalization, [name]: files }
       }));
-
-      // Generate previews for multiple files
       if (files) {
         const newPreviews = Array.from(files).map(file => URL.createObjectURL(file));
         setFilePreviews(prev => {
           const newFilePreviews = [...prev];
-          newFilePreviews[4] = newPreviews; // index 4 for additionalDocuments
+          newFilePreviews[4] = newPreviews; 
           return newFilePreviews;
         });
       }
@@ -60,7 +58,7 @@ const Hospitalization: React.FC<HospitalizationProps> = ({ isOpen, onToggle, for
         const newPreview = URL.createObjectURL(files[0]);
         setFilePreviews(prev => {
           const newFilePreviews = [...prev];
-          newFilePreviews[getFileInputIndex(name)] = newPreview; // Update the corresponding preview
+          newFilePreviews[getFileInputIndex(name)] = newPreview;
           return newFilePreviews;
         });
       }

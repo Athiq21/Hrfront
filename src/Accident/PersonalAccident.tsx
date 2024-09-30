@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ClearIcon from '@mui/icons-material/Clear';
 import DocumentUploader from '../Component/DocumentUploader';
@@ -20,14 +19,12 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const selectedFiles = Array.from(event.target.files || []);
     const newFiles = [...files];
-    newFiles[index] = selectedFiles[0] || null; // Store single file or null
+    newFiles[index] = selectedFiles[0] || null; 
     setFiles(newFiles);
 
     const newPreviews = [...filePreviews];
-    newPreviews[index] = selectedFiles[0] ? URL.createObjectURL(selectedFiles[0]) : null; // Generate preview for single file
+    newPreviews[index] = selectedFiles[0] ? URL.createObjectURL(selectedFiles[0]) : null; 
     setFilePreviews(newPreviews);
-
-    // Update the formData state in the parent component for the file inputs
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       personalAccident: {
@@ -49,8 +46,6 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
 
     setFiles(newFiles);
     setFilePreviews(newPreviews);
-
-    // Update the formData state in the parent component to remove the file
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       personalAccident: {
@@ -199,8 +194,6 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
           </div>
         </div>
       {/* )} */}
-
-      {/* Modal for Image Enlargement */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-4 rounded-lg relative">

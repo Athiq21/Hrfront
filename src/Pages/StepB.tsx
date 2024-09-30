@@ -10,12 +10,8 @@ import Previous from '../Component/Previous';
 const StepB: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Retrieve data from localStorage or location state
   const savedData = JSON.parse(localStorage.getItem('stepBData') || '{}');
   const { tempData } = location.state as { tempData?: any } || {};
-
-  // Initialize state with either tempData or savedData
   const [policyNumber, setPolicyNumber] = useState<string>(tempData?.policyNumber || savedData.policyNumber || '');
   const [insuredNumber, setInsuredNumber] = useState<string>(tempData?.insuredNumber || savedData.insuredNumber || '');
   const [telephoneNumber, setTelephoneNumber] = useState<string>(tempData?.telephoneNumber || savedData.telephoneNumber || '');
@@ -27,7 +23,7 @@ const StepB: React.FC = () => {
   const [branch, setBranch] = useState<string>(tempData?.branch || savedData.branch || '');
   const [accNumber, setAccNumber] = useState<string>(tempData?.accNumber || savedData.accNumber || '');
   const [accHolder, setAccHolder] = useState<string>(tempData?.accHolder || savedData.accHolder || '');
-  const { claimType } = location.state as { claimType: string }; // Extract claim type from state
+  const { claimType } = location.state as { claimType: string }; 
 
   const insuredPeopleOptions = ['Self', 'Spouse', 'Child',
     'Father', 'Mother', 'Father-in-law', 'Mother-in-law','Sister', 'Brother'
@@ -36,8 +32,6 @@ const StepB: React.FC = () => {
   const handleInsuredChange = (option: string) => {
     setSelectedInsured(option);
   };
-
-  // Save data to localStorage when any field changes
   useEffect(() => {
     const stepBData = {
       policyNumber,
@@ -71,7 +65,7 @@ const StepB: React.FC = () => {
     };
 
     localStorage.setItem('formData', JSON.stringify(newTempData));
-    navigate('/step-c', { state: { tempData: newTempData, claimType } }); // Pass claimType to StepC
+    navigate('/step-c', { state: { tempData: newTempData, claimType } });
   };
 
   // Clear all fields and localStorage data
@@ -100,10 +94,12 @@ const StepB: React.FC = () => {
       <h1 className="text-2xl font-semibold mb-4">Primary Details</h1>
 
       {[{ label: 'Policy Number', 
-        value: policyNumber, setter: setPolicyNumber },
+        value: policyNumber,
+         setter: setPolicyNumber },
         { label: 'Insured Number',
              value: insuredNumber, setter: setInsuredNumber },
-        { label: 'Telephone Number', value: telephoneNumber, setter: setTelephoneNumber },
+        { label: 'Telephone Number', value: telephoneNumber,
+           setter: setTelephoneNumber },
         { label: 'Email',
              value: email, setter: setEmail },
         { label: 'Name of Patient',
@@ -116,8 +112,6 @@ const StepB: React.FC = () => {
              value: accNumber, setter: setAccNumber },
         { label: 'Account Holder',
              value: accHolder, setter: setAccHolder },
-     
-     
      
        ].map((field, index) => (
         <div key={index} className="flex items-center mb-5">
@@ -137,11 +131,11 @@ const StepB: React.FC = () => {
         />
       </div>
 
-      <div className="flex justify-between mt-7 px-10"> {/* Added px-4 for better alignment and reduced margin */}
-  <div className="mr-2"> {/* Optional: Adding a small margin to the left button */}
+      <div className="flex justify-between mt-7 px-10"> 
+  <div className="mr-2">
     <ClearButton onClear={handleClear} />
   </div>
-  <div className="ml-2"> {/* Optional: Adding a small margin to the right button */}
+  <div className="ml-2"> 
     <Next
       tempData=""
       setTempData={() => {}}
