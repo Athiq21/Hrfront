@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ClearIcon from '@mui/icons-material/Clear';
 import DocumentUploader from '../Component/DocumentUploader';
 
 interface PersonalAccidentProps {
@@ -18,7 +20,6 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const selectedFiles = Array.from(event.target.files || []);
     const newFiles = [...files];
-
     newFiles[index] = selectedFiles[0] || null; // Store single file or null
     setFiles(newFiles);
 
@@ -85,15 +86,17 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
 
   return (
     <div className="mb-2">
-      <button
+        <label className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200">Personal Accident Cover</label>
+      
+      {/* <button
         className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200"
         onClick={onToggle}
       >
         <span className="flex items-center">Personal Accident Cover</span>
         <KeyboardArrowDownIcon className="ml-2" />
       </button>
-      {isOpen && (
-        <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
+      {isOpen && ( */}
+        <div className="mt-1 p-2 border-2 bg-gray-100 rounded-md">
           <div className="grid grid-cols-2 gap-4">
             <label>Date of Accident:</label>
             <input 
@@ -104,90 +107,98 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
               className="border rounded px-2 py-1" 
             />
             <label>Diagnosis Card:</label>
-            <input
-              type="file"
-              className="border rounded px-2 py-1"
-              onChange={(e) => handleFileChange(e, 0)}
-              accept="image/*"
-            />
-            {filePreviews[0] && (
-              <div className="relative mt-2 flex items-center">
-                <button 
-                  className="text-blue-500 underline"
-                  onClick={() => openModal(filePreviews[0] as string)} 
-                >
-                  View
-                </button>
-                <span className="absolute top-0 right-0 text-red-500 cursor-pointer" onClick={() => handleRemoveFile(0)}>
-                  X
-                </span>
-              </div>
-            )}
+            <div className="relative">
+              <input
+                type="file"
+                className="border rounded px-2 py-1 w-48"
+                onChange={(e) => handleFileChange(e, 0)}
+                accept="image/*"
+              />
+              {filePreviews[0] && (
+                <div className="absolute top-1 right-1 flex items-center">
+                  <button 
+                    className="text-blue-500 flex items-center mr-1"
+                    onClick={() => openModal(filePreviews[0] as string)} 
+                  >
+                    <VisibilityIcon /> 
+                  </button>
+                  <span className="text-red-500 cursor-pointer" onClick={() => handleRemoveFile(0)}>
+                    <ClearIcon fontSize="small" />
+                  </span>
+                </div>
+              )}
+            </div>
             <label>Medical Attendant's Report:</label>
-            <input
-              type="file"
-              className="border rounded px-2 py-1"
-              onChange={(e) => handleFileChange(e, 1)}
-              accept="image/*"
-            />
-            {filePreviews[1] && (
-              <div className="relative mt-2 flex items-center">
-                <button 
-                  className="text-blue-500 underline"
-                  onClick={() => openModal(filePreviews[1] as string)} 
-                >
-                  View
-                </button>
-                <span className="absolute top-0 right-0 text-red-500 cursor-pointer" onClick={() => handleRemoveFile(1)}>
-                  X
-                </span>
-              </div>
-            )}
+            <div className="relative">
+              <input
+                type="file"
+                className="border rounded px-2 py-1 w-48"
+                onChange={(e) => handleFileChange(e, 1)}
+                accept="image/*"
+              />
+              {filePreviews[1] && (
+                <div className="absolute top-1 right-1 flex items-center">
+                  <button 
+                    className="text-blue-500 flex items-center mr-1"
+                    onClick={() => openModal(filePreviews[1] as string)} 
+                  >
+                    <VisibilityIcon/> 
+                  </button>
+                  <span className="text-red-500 cursor-pointer" onClick={() => handleRemoveFile(1)}>
+                    <ClearIcon fontSize="small" />
+                  </span>
+                </div>
+              )}
+            </div>
             <label>Birth Certificate of the Insured:</label>
-            <input
-              type="file"
-              className="border rounded px-2 py-1"
-              onChange={(e) => handleFileChange(e, 2)}
-              accept="image/*"
-            />
-            {filePreviews[2] && (
-              <div className="relative mt-2 flex items-center">
-                <button 
-                  className="text-blue-500 underline"
-                  onClick={() => openModal(filePreviews[2] as string)} 
-                >
-                  View
-                </button>
-                <span className="absolute top-0 right-0 text-red-500 cursor-pointer" onClick={() => handleRemoveFile(2)}>
-                  X
-                </span>
-              </div>
-            )}
+            <div className="relative">
+              <input
+                type="file"
+                className="border rounded px-2 py-1 w-48"
+                onChange={(e) => handleFileChange(e, 2)}
+                accept="image/*"
+              />
+              {filePreviews[2] && (
+                <div className="absolute top-1 right-1 flex items-center">
+                  <button 
+                    className="text-blue-500 flex items-center mr-1"
+                    onClick={() => openModal(filePreviews[2] as string)} 
+                  >
+                    <VisibilityIcon/> 
+                  </button>
+                  <span className="text-red-500 cursor-pointer" onClick={() => handleRemoveFile(2)}>
+                    <ClearIcon fontSize="small" />
+                  </span>
+                </div>
+              )}
+            </div>
             <label>Police Report/JMO Report:</label>
-            <input
-              type="file"
-              className="border rounded px-2 py-1"
-              onChange={(e) => handleFileChange(e, 3)}
-              accept="image/*"
-            />
-            {filePreviews[3] && (
-              <div className="relative mt-2 flex items-center">
-                <button 
-                  className="text-blue-500 underline"
-                  onClick={() => openModal(filePreviews[3] as string)} 
-                >
-                  View
-                </button>
-                <span className="absolute top-0 right-0 text-red-500 cursor-pointer" onClick={() => handleRemoveFile(3)}>
-                  X
-                </span>
-              </div>
-            )}
+            <div className="relative">
+              <input
+                type="file"
+                className="border rounded px-2 py-1 w-48"
+                onChange={(e) => handleFileChange(e, 3)}
+                accept="image/*"
+              />
+              {filePreviews[3] && (
+                <div className="absolute top-1 right-1 flex items-center">
+                  <button 
+                    className="text-blue-500 flex items-center mr-1"
+                    onClick={() => openModal(filePreviews[3] as string)} 
+                  >
+                    <VisibilityIcon  /> 
+                  </button>
+                  <span className="text-red-500 cursor-pointer" onClick={() => handleRemoveFile(3)}>
+                    <ClearIcon fontSize="small" />
+                  </span>
+                </div>
+              )}
+            </div>
             <label className="mr-2">Additional Documents:</label>
             <DocumentUploader />
           </div>
         </div>
-      )}
+      {/* )} */}
 
       {/* Modal for Image Enlargement */}
       {isModalOpen && (

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DocumentUploader from '../Component/DocumentUploader';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ClearIcon from '@mui/icons-material/Clear';
+import FilePreviewModal from '../Component/FilePreviewModal';
 
 interface SpectaclesProps {
   isOpen: boolean;
@@ -100,94 +103,74 @@ const Spectacles: React.FC<SpectaclesProps> = ({ isOpen, onToggle, formData, set
 
   return (
     <div className="mb-2">
-        <label   className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200">Spectacles</label>
-      {/* <button
-        className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200"
-        onClick={onToggle}
-      >
-        <span className="flex items-center">Spectacles</span>
-        <KeyboardArrowDownIcon className="ml-2" />
-      </button>
-      {isOpen && ( */}
-        <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
-          <div className="grid grid-cols-2 gap-4">
-            <label>Date of Diagnosis:</label>
-            <input 
-              type="date" 
-              name="dateOfDiagnosisspe" 
-              value={formData.spectacles.dateOfDiagnosis}
-              onChange={handleChange}
-              className="border rounded px-2 py-1" 
-            />
-            <label>Claimed Amount:</label>
-            <input 
-              type="text" 
-              name="claimedAmountspe"
-              value={formData.spectacles.claimedAmountspe}
-              onChange={handleChange}
-              className="border rounded px-2 py-1" 
-            />
+      <label className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200">Spectacles</label>
+      
+      <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
+        <div className="grid grid-cols-2 gap-4">
+          <label>Date of Diagnosis:</label>
+          <input 
+            type="date" 
+            name="dateOfDiagnosis" 
+            value={formData.spectacles.dateOfDiagnosis}
+            onChange={handleChange}
+            className="border rounded px-2 py-1" 
+          />
 
-            <label>Prescription(s):</label>
+          <label>Claimed Amount:</label>
+          <input 
+            type="text" 
+            name="claimedAmountspe"
+            value={formData.spectacles.claimedAmountspe}
+            onChange={handleChange}
+            className="border rounded px-2 py-1" 
+          />
+
+          <label>Prescription:</label>
+          <div className="flex items-center mb-2">
             <input
               type="file"
-              className="border rounded px-2 py-1"
+              name="prescription"
               onChange={(e) => handleFileChange(e, 0)}
-              accept="image/*"
+              className="border rounded px-2 py-1 w-48"
             />
             {filePreviews[0] && (
-              <div className="relative mt-2 flex items-center">
-                <button 
-                  className="text-blue-500 underline"
-                  onClick={() => openModal(filePreviews[0] as string)} 
-                >
-                  View
+              <div className="flex items-center ml-2">
+                <button className="text-blue-500 underline flex items-center" onClick={() => openModal(filePreviews[0] as string)}>
+                  <VisibilityIcon className="mr-1" />
                 </button>
-                <span className="absolute top-0 right-0 text-red-500 cursor-pointer" onClick={() => handleRemoveFile(0)}>
-                  X
+                <span className="text-red-500 cursor-pointer ml-2" onClick={() => handleRemoveFile(0)}>
+                  <ClearIcon />
                 </span>
               </div>
             )}
+          </div>
 
-            <label>Original Payment Receipt(s):</label>
+          <label>Original Payment Receipt:</label>
+          <div className="flex items-center mb-2">
             <input
               type="file"
-              className="border rounded px-2 py-1"
+              name="originalPaymentRecspe"
               onChange={(e) => handleFileChange(e, 1)}
-              accept="image/*"
+              className="border rounded px-2 py-1 w-48"
             />
             {filePreviews[1] && (
-              <div className="relative mt-2 flex items-center">
-                <button 
-                  className="text-blue-500 underline"
-                  onClick={() => openModal(filePreviews[1] as string)} 
-                >
-                  View
+              <div className="flex items-center ml-2">
+                <button className="text-blue-500 underline flex items-center" onClick={() => openModal(filePreviews[1] as string)}>
+                  <VisibilityIcon className="mr-1" />
                 </button>
-                <span className="absolute top-0 right-0 text-red-500 cursor-pointer" onClick={() => handleRemoveFile(1)}>
-                  X
+                <span className="text-red-500 cursor-pointer ml-2" onClick={() => handleRemoveFile(1)}>
+                  <ClearIcon />
                 </span>
               </div>
             )}
-
-            <label>Additional Documents:</label>
-            <DocumentUploader />
-            {/* Additional Documents input */}
           </div>
-        </div>
-      {/* )} */}
 
-      {/* Modal for Image Enlargement */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-4 rounded-lg relative">
-            <img src={selectedImage!} alt="Enlarged Preview" className="max-w-lg max-h-screen" />
-            <button className="absolute top-2 right-2 text-red-500" onClick={closeModal}>
-              X
-            </button>
-          </div>
+          <label>Additional Documents:</label>
+          <DocumentUploader />
         </div>
-      )}
+      </div>
+
+      <FilePreviewModal isOpen={isModalOpen} onClose={closeModal} fileUrl={selectedImage} />
     </div>
   );
 };
