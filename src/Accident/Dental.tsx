@@ -125,6 +125,7 @@ const Dental: React.FC<DentalProps> = ({ isOpen, onToggle, formData, setFormData
       <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
         <div className="grid grid-cols-2 gap-4">
           <label>Date of Diagnosis:</label>
+          <div className="flex flex-col">
           <input
             type="date"
             name="dateOfDiagnosis"
@@ -132,10 +133,13 @@ const Dental: React.FC<DentalProps> = ({ isOpen, onToggle, formData, setFormData
             onChange={handleChange}
             className="border rounded px-2 py-1"
           />
+               <span className="text-gray-500 text-sm mt-1">* Required</span>
+               </div>
 
           <label>Claimed Amount:</label>
           <div className="flex items-center border rounded px-2 py-1">
           <span className="mr-1">Rs.</span>
+          <div className="flex flex-col">
           <input
             type="text"
             name="claimedAmount"
@@ -143,6 +147,8 @@ const Dental: React.FC<DentalProps> = ({ isOpen, onToggle, formData, setFormData
             onChange={handleChange}
             className="border rounded px-2 py-1"
           />
+               <span className="text-gray-500 text-sm mt-1">* Required</span>
+               </div>
 </div>
           <label>Prescription(s):</label>
           <div className="flex items-center mb-2">
@@ -161,6 +167,9 @@ const Dental: React.FC<DentalProps> = ({ isOpen, onToggle, formData, setFormData
                   <ClearIcon />
                 </span>
               </div>
+            )}
+            {!filePreviews[0] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
             )}
           </div>
 
@@ -181,6 +190,9 @@ const Dental: React.FC<DentalProps> = ({ isOpen, onToggle, formData, setFormData
                   <ClearIcon />
                 </span>
               </div>
+            )}
+            {!filePreviews[1] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
             )}
           </div>
 

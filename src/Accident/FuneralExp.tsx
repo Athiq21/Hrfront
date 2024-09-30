@@ -1,3 +1,225 @@
+// import React, { useState } from 'react';
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import DocumentUploader from '../Component/DocumentUploader';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
+// import ClearIcon from '@mui/icons-material/Clear';
+// import FilePreviewModal from '../Component/FilePreviewModal';
+
+// interface FuneralExpProps {
+//   isOpen: boolean;
+//   onToggle: () => void;
+//   formData: any;
+//   setFormData: React.Dispatch<React.SetStateAction<any>>;
+// }
+
+// const FuneralExp: React.FC<FuneralExpProps> = ({ isOpen, onToggle, formData, setFormData }) => {
+//   const [files, setFiles] = useState<(File | null)[]>(Array(3).fill(null));
+//   const [modalOpen, setModalOpen] = useState(false);
+//   const [currentImage, setCurrentImage] = useState<string | null>(null);
+//   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+//   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+//   const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null); 
+//   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     const { name, value } = event.target;
+//     setFormData((prevFormData: any) => ({
+//       ...prevFormData,
+//       funeralExp: {
+//         ...prevFormData.funeralExp,
+//         [name]: value,
+//       },
+//     }));
+//   };
+
+//   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+//     const selectedFiles = Array.from(event.target.files || []);
+//     const newFiles = [...files];
+
+//     if (index < files.length) {
+//       newFiles[index] = selectedFiles[0] || null;
+//       setFiles(newFiles);
+
+//       setFormData((prevFormData: any) => ({
+//         ...prevFormData,
+//         funeralExp: {
+//           ...prevFormData.funeralExp,
+//           [index === 0 ? 'DeathCert' : index === 1 ? 'NicCopy' : 'Proof']: selectedFiles[0] || null,
+//         },
+//       }));
+//     }
+//   };
+
+//   const handleRemoveFile = (index: number) => {
+//     const newFiles = [...files];
+//     newFiles[index] = null;
+//     setFiles(newFiles);
+
+//     setFormData((prevFormData: any) => ({
+//       ...prevFormData,
+//       funeralExp: {
+//         ...prevFormData.funeralExp,
+//         [index === 0 ? 'DeathCert' : index === 1 ? 'NicCopy' : 'Proof']: null,
+//       },
+//     }));
+//   };
+
+//   const handleViewFile = (index: number) => {
+//     if (files[index]) {
+//       const fileUrl = URL.createObjectURL(files[index] as File);
+//       setCurrentImage(fileUrl);
+//       setModalOpen(true);
+//     }
+//   };
+
+//   const closeModal = () => {
+//     setModalOpen(false);
+//     setCurrentFileUrl(null);
+//   };
+
+//   return (
+//     <div className="mb-2">
+//         <label className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200">Funeral Expenses</label>
+      
+//       {/* <button
+//         className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200"
+//         onClick={onToggle}
+//       >
+//         <span className="flex items-center">Funeral Expenses</span>
+//         <KeyboardArrowDownIcon className="ml-2" />
+//       </button>
+//       {isOpen && ( */}
+//         <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
+//           <div className="grid grid-cols-2 gap-4">
+//             <label>Member's Name in Full:</label>
+//             <input
+//               type="text"
+//               name="membersName"
+//               value={formData.funeralExp.membersName}
+//               onChange={handleChange}
+//               className="border rounded px-2 py-1"
+//             />
+
+//             <label>EPF No:</label>
+//             <input
+//               type="text"
+//               name="EpfNo"
+//               value={formData.funeralExp.EpfNo}
+//               onChange={handleChange}
+//               className="border rounded px-2 py-1"
+//             />
+
+             
+//             <label>Relationship to the Deceased:</label>
+//             <input
+//               type="text"
+//               name="Relationship"
+//               value={formData.funeralExp.Relationship}
+//               onChange={handleChange}
+//               className="border rounded px-2 py-1"
+//             />
+//             <label>Deceased’s Name:</label>
+//             <input
+//               type="text"
+//               name="DeceasedName"
+//               value={formData.funeralExp.DeceasedName}
+//               onChange={handleChange}
+//               className="border rounded px-2 py-1"
+//             />
+//             <label>Age at Death:</label>
+//             <input
+//               type="text"
+//               name="ageOfDate"
+//               value={formData.funeralExp.ageOfDate}
+//               onChange={handleChange}
+//               className="border rounded px-2 py-1"
+//             />
+//             <label>Claim Cheque should be drawn in favour of below name:</label>
+//             <input
+//               type="text"
+//               name="ClaimCheque"
+//               value={formData.funeralExp.ClaimCheque}
+//               onChange={handleChange}
+//               className="border rounded px-2 py-1"
+//             />
+//             <div className="col-span-2 text-center border-b-2 border-black my-1 w-24">
+//               <span className="font-semibold">Claim Form</span>
+//             </div>
+
+//             <label>Death Certificate:</label>
+//             <div className="relative">
+//               <input
+//                 type="file"
+//                 className="border rounded px-2 py-1 w-48"
+//                 onChange={(e) => handleFileChange(e, 0)}
+//               />
+//               {files[0] && (
+//                 <div className="absolute top-0 right-0 flex items-center">
+//                   <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(0)}>
+//                     <VisibilityIcon className="mr-1" />
+//                   </span>
+//                   <ClearIcon
+//                     className="text-red-500 cursor-pointer ml-2"
+//                     onClick={() => handleRemoveFile(0)}
+//                   />
+//                 </div>
+//               )}
+//             </div>
+
+//             <label>NIC Copy of the Deceased Person:</label>
+//             <div className="relative">
+//               <input
+//                 type="file"
+//                 className="border rounded px-2 py-1 w-48"
+//                 onChange={(e) => handleFileChange(e, 1)}
+//               />
+//               {files[1] && (
+//                 <div className="absolute top-0 right-0 flex items-center">
+//                   <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(1)}>
+//                     <VisibilityIcon className="mr-1" />
+//                   </span>
+//                   <ClearIcon
+//                     className="text-red-500 cursor-pointer ml-2"
+//                     onClick={() => handleRemoveFile(1)}
+//                   />
+//                 </div>
+//               )}
+//             </div>
+
+//             <label>Proof of Relationship to the Deceased (Birth/Marriage Certificate etc):</label>
+//             <div className="relative">
+//               <input
+//                 type="file"
+//                 className="border rounded px-2 py-1 w-48"
+//                 onChange={(e) => handleFileChange(e, 2)}
+//                 multiple
+//               />
+//               {files[2] && (
+//                 <div className="absolute top-0 right-0 flex items-center">
+//                   <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(2)}>
+//                     <VisibilityIcon className="mr-1" />
+//                   </span>
+//                   <ClearIcon
+//                     className="text-red-500 cursor-pointer ml-2"
+//                     onClick={() => handleRemoveFile(2)}
+//                   />
+//                 </div>
+//               )}
+//             </div>
+
+//             <label className="mr-2">Additional Documents:</label>
+//             <DocumentUploader />
+//           </div>
+//         </div>
+//       {/* )} */}
+
+     
+//       <FilePreviewModal isOpen={isModalOpen} onClose={closeModal} fileUrl={selectedImage} />
+//     </div>
+//   );
+// };
+
+// export default FuneralExp;
+
+
 import React, { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DocumentUploader from '../Component/DocumentUploader';
@@ -19,6 +241,8 @@ const FuneralExp: React.FC<FuneralExpProps> = ({ isOpen, onToggle, formData, set
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null); 
+  const [filePreviews, setFilePreviews] = useState<(string | string[] | null)[]>(Array(3).fill(null));
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevFormData: any) => ({
@@ -77,138 +301,162 @@ const FuneralExp: React.FC<FuneralExpProps> = ({ isOpen, onToggle, formData, set
 
   return (
     <div className="mb-2">
-        <label className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200">Funeral Expenses</label>
-      
-      {/* <button
-        className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200"
-        onClick={onToggle}
-      >
-        <span className="flex items-center">Funeral Expenses</span>
-        <KeyboardArrowDownIcon className="ml-2" />
-      </button>
-      {isOpen && ( */}
-        <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
-          <div className="grid grid-cols-2 gap-4">
-            <label>Member's Name in Full:</label>
-            <input
-              type="text"
-              name="membersName"
-              value={formData.funeralExp.membersName}
-              onChange={handleChange}
-              className="border rounded px-2 py-1"
-            />
-            <label>EPF No:</label>
-            <input
-              type="text"
-              name="EpfNo"
-              value={formData.funeralExp.EpfNo}
-              onChange={handleChange}
-              className="border rounded px-2 py-1"
-            />
-            <label>Relationship to the Deceased:</label>
-            <input
-              type="text"
-              name="Relationship"
-              value={formData.funeralExp.Relationship}
-              onChange={handleChange}
-              className="border rounded px-2 py-1"
-            />
-            <label>Deceased’s Name:</label>
-            <input
-              type="text"
-              name="DeceasedName"
-              value={formData.funeralExp.DeceasedName}
-              onChange={handleChange}
-              className="border rounded px-2 py-1"
-            />
-            <label>Age at Death:</label>
-            <input
-              type="text"
-              name="ageOfDate"
-              value={formData.funeralExp.ageOfDate}
-              onChange={handleChange}
-              className="border rounded px-2 py-1"
-            />
-            <label>Claim Cheque should be drawn in favour of below name:</label>
-            <input
-              type="text"
-              name="ClaimCheque"
-              value={formData.funeralExp.ClaimCheque}
-              onChange={handleChange}
-              className="border rounded px-2 py-1"
-            />
-            <div className="col-span-2 text-center border-b-2 border-black my-1 w-24">
-              <span className="font-semibold">Claim Form</span>
-            </div>
+      <label className="w-full flex justify-between items-center border-2 border-orange-600 px-4 py-2 rounded-md bg-white text-black hover:bg-orange-200 transition duration-200">
+        Funeral Expenses
+      </label>
 
-            <label>Death Certificate:</label>
-            <div className="relative">
-              <input
-                type="file"
-                className="border rounded px-2 py-1 w-48"
-                onChange={(e) => handleFileChange(e, 0)}
-              />
-              {files[0] && (
-                <div className="absolute top-0 right-0 flex items-center">
-                  <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(0)}>
-                    <VisibilityIcon className="mr-1" />
-                  </span>
-                  <ClearIcon
-                    className="text-red-500 cursor-pointer ml-2"
-                    onClick={() => handleRemoveFile(0)}
-                  />
+      <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
+        <div className="grid grid-cols-2 gap-4">
+          <label>Member's Name in Full: </label>
+            <div className='flex flex-col'>
+          <input
+            type="text"
+            name="membersName"
+            value={formData.funeralExp.membersName}
+            onChange={handleChange}
+            className="border rounded px-2 py-1"
+          />
+               <span className="text-gray-500 text-sm mt-1">* Required</span>
+               </div>
+
+          <label>EPF No:</label>
+          <div className='flex flex-col'>
+          <input
+            type="text"
+            name="EpfNo"
+            value={formData.funeralExp.EpfNo}
+            onChange={handleChange}
+            className="border rounded px-2 py-1"
+          />
+                <span className="text-gray-500 text-sm mt-1">* Required</span>
                 </div>
-              )}
-            </div>
 
-            <label>NIC Copy of the Deceased Person:</label>
-            <div className="relative">
-              <input
-                type="file"
-                className="border rounded px-2 py-1 w-48"
-                onChange={(e) => handleFileChange(e, 1)}
-              />
-              {files[1] && (
-                <div className="absolute top-0 right-0 flex items-center">
-                  <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(1)}>
-                    <VisibilityIcon className="mr-1" />
-                  </span>
-                  <ClearIcon
-                    className="text-red-500 cursor-pointer ml-2"
-                    onClick={() => handleRemoveFile(1)}
-                  />
+          <label>Relationship to the Deceased:</label>
+          <div className='flex flex-col'>
+          <input
+            type="text"
+            name="Relationship"
+            value={formData.funeralExp.Relationship}
+            onChange={handleChange}
+            className="border rounded px-2 py-1"
+          />         <span className="text-gray-500 text-sm mt-1">* Required</span>
                 </div>
-              )}
-            </div>
 
-            <label>Proof of Relationship to the Deceased (Birth/Marriage Certificate etc):</label>
-            <div className="relative">
-              <input
-                type="file"
-                className="border rounded px-2 py-1 w-48"
-                onChange={(e) => handleFileChange(e, 2)}
-                multiple
-              />
-              {files[2] && (
-                <div className="absolute top-0 right-0 flex items-center">
-                  <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(2)}>
-                    <VisibilityIcon className="mr-1" />
-                  </span>
-                  <ClearIcon
-                    className="text-red-500 cursor-pointer ml-2"
-                    onClick={() => handleRemoveFile(2)}
-                  />
-                </div>
-              )}
-            </div>
+          <label>Deceased’s Name: </label>
+          <div className='flex flex-col'>
+          <input
+            type="text"
+            name="DeceasedName"
+            value={formData.funeralExp.DeceasedName}
+            onChange={handleChange}
+            className="border rounded px-2 py-1"
+          />
+ <span className="text-gray-500 text-sm mt-1">* Required</span>
+ </div>
 
-            <label className="mr-2">Additional Documents:</label>
-            <DocumentUploader />
+          <label>Age at Death:</label>
+          <div className='flex flex-col'>
+          <input
+            type="text"
+            name="ageOfDate"
+            value={formData.funeralExp.ageOfDate}
+            onChange={handleChange}
+            className="border rounded px-2 py-1"
+          />
+ <span className="text-gray-500 text-sm mt-1">* Required</span>
+ </div>
+
+          <label>Claim Cheque should be drawn in favour of below name: </label>
+          <div className='flex flex-col'>
+          <input
+            type="text"
+            name="ClaimCheque"
+            value={formData.funeralExp.ClaimCheque}
+            onChange={handleChange}
+            className="border rounded px-2 py-1"
+          />
+           <span className="text-gray-500 text-sm mt-1">* Required</span>
+           </div>
+          
+          <div className="col-span-2 text-center border-b-2 border-black my-1 w-24">
+            <span className="font-semibold">Claim Form</span>
           </div>
-        </div>
-      {/* )} */}
 
-     
+          <label>Death Certificate:</label>
+          <div className="relative">
+            <input
+              type="file"
+              className="border rounded px-2 py-1 w-48"
+              onChange={(e) => handleFileChange(e, 0)}
+            />
+            {files[0] && (
+              <div className="absolute top-0 right-0 flex items-center">
+                <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(0)}>
+                  <VisibilityIcon className="mr-1" />
+                </span>
+                <ClearIcon
+                  className="text-red-500 cursor-pointer ml-2"
+                  onClick={() => handleRemoveFile(0)}
+                />
+              </div>
+            )}
+            {!files[0] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
+            )}
+          </div>
+
+          <label>NIC Copy of the Deceased Person: <span className="text-gray-500">*</span></label>
+          <div className="relative">
+            <input
+              type="file"
+              className="border rounded px-2 py-1 w-48"
+              onChange={(e) => handleFileChange(e, 1)}
+            />
+            {files[1] && (
+              <div className="absolute top-0 right-0 flex items-center">
+                <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(1)}>
+                  <VisibilityIcon className="mr-1" />
+                </span>
+                <ClearIcon
+                  className="text-red-500 cursor-pointer ml-2"
+                  onClick={() => handleRemoveFile(1)}
+                />
+              </div>
+            )}
+               {!files[1] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
+            )}
+          </div>
+
+          <label>Proof of Relationship to the Deceased (Birth/Marriage Certificate etc): <span className="text-gray-500">*</span></label>
+          <div className="relative">
+            <input
+              type="file"
+              className="border rounded px-2 py-1 w-48"
+              onChange={(e) => handleFileChange(e, 2)}
+              multiple
+            />
+            {files[2] && (
+              <div className="absolute top-0 right-0 flex items-center">
+                <span className="flex items-center text-blue-500 cursor-pointer" onClick={() => handleViewFile(2)}>
+                  <VisibilityIcon className="mr-1" />
+                </span>
+                <ClearIcon
+                  className="text-red-500 cursor-pointer ml-2"
+                  onClick={() => handleRemoveFile(2)}
+                />
+              </div>
+            )}
+               {!files[2] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
+            )}
+          </div>
+
+          <label className="mr-2">Additional Documents:</label>
+          <DocumentUploader />
+        </div>
+      </div>
+
       <FilePreviewModal isOpen={isModalOpen} onClose={closeModal} fileUrl={selectedImage} />
     </div>
   );

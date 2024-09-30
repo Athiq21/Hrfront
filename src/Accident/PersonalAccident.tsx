@@ -95,6 +95,7 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
         <div className="mt-1 p-2 border-2 bg-gray-100 rounded-md">
           <div className="grid grid-cols-2 gap-4">
             <label>Date of Accident:</label>
+            <div className='flex flex-col'>
             <input 
               type="date" 
               name="dateOfAccident" 
@@ -102,6 +103,11 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
               onChange={handleChange}
               className="border rounded px-2 py-1" 
             />
+    <span className="text-gray-500 text-sm mt-1">* Required</span>
+    </div>
+
+
+
             <label>Diagnosis Card:</label>
             <div className="relative">
               <input
@@ -123,6 +129,10 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
                   </span>
                 </div>
               )}
+
+               {!filePreviews[0] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
+            )}
             </div>
             <label>Medical Attendant's Report:</label>
             <div className="relative">
@@ -145,6 +155,9 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
                   </span>
                 </div>
               )}
+               {!filePreviews[1] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
+            )}
             </div>
             <label>Birth Certificate of the Insured:</label>
             <div className="relative">
@@ -167,6 +180,9 @@ const PersonalAccident: React.FC<PersonalAccidentProps> = ({ isOpen, onToggle, f
                   </span>
                 </div>
               )}
+               {!filePreviews[2] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
+            )}
             </div>
             <label>Police Report/JMO Report:</label>
             <div className="relative">

@@ -94,6 +94,7 @@ const CriticalIllness: React.FC<CriticalIllnessProps> = ({ isOpen, onToggle, for
         <div className="mt-1 p-2 border-2 bg-gray-100 bg-white rounded-md">
           <div className="grid grid-cols-2 gap-4">
             <label>Date of Diagnosis:</label>
+            <div className='flex flex-col'>
             <input 
               type="date" 
               name="dateOfDiagnosis" 
@@ -101,6 +102,11 @@ const CriticalIllness: React.FC<CriticalIllnessProps> = ({ isOpen, onToggle, for
               onChange={handleChange}
               className="border rounded px-2 py-1" 
             />
+ <span className="text-gray-500 text-sm mt-1">* Required</span>
+    </div>
+
+
+
             <label>Diagnosis Card:</label>
             <div className="flex items-center mb-2">
               <input
@@ -118,7 +124,10 @@ const CriticalIllness: React.FC<CriticalIllnessProps> = ({ isOpen, onToggle, for
                     <ClearIcon />
                   </span>
                 </div>
+              )}     {!filePreviews[0] && (
+                <span className="text-gray-500 text-sm mt-1">* Required</span>
               )}
+              
             </div>
             <label>Medical Attendant's Report:</label>
             <div className="flex items-center mb-2">
@@ -138,6 +147,10 @@ const CriticalIllness: React.FC<CriticalIllnessProps> = ({ isOpen, onToggle, for
                   </span>
                 </div>
               )}
+
+{!filePreviews[1] && (
+              <span className="text-gray-500 text-sm mt-1">* Required</span>
+            )}
             </div>
             <label className="mr-2">Additional Documents:</label>
             <DocumentUploader />
